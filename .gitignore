@@ -1,21 +1,57 @@
-# v0 runtime files
+# ── Next.js / v0 artifacts ─────────────────────────────────────────────────────
 __v0_runtime_loader.js
 __v0_devtools.tsx
 __v0_jsx-dev-runtime.ts
-
-# Design system (local only, not deployed)
 app/design-system/
-
-# Common ignores
 node_modules/
 .next/
-.env*.local
-.DS_Store
-.claude/
+out/
 tsconfig.tsbuildinfo
 next-env.d.ts
-# Internal docs (not for public repo)
+
+# ── Environment & secrets ───────────────────────────────────────────────────────
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+
+# ── Tauri / Rust ───────────────────────────────────────────────────────────────
+src-tauri/target/
+src-tauri/gen/
+
+# ── macOS ──────────────────────────────────────────────────────────────────────
+.DS_Store
+.DS_Store?
+._*
+.AppleDouble
+.LSOverride
+.Spotlight-V100
+.Trashes
+__MACOSX/
+
+# ── Claude Code ────────────────────────────────────────────────────────────────
+.claude/
 CLAUDE.md
+
+# ── CodeRLM / Axiom dev tools ──────────────────────────────────────────────────
+.coderlm/
+.axiom/
+
+# ── Editor & IDE ───────────────────────────────────────────────────────────────
+.vscode/settings.json
+.vscode/launch.json
+.idea/
+*.swp
+*.swo
+*~
+
+# ── mise (local overrides only) ────────────────────────────────────────────────
+.mise.local.toml
+
+# ── Internal docs (not for public repo) ───────────────────────────────────────
 ARCHITECTURE.md
 DEMO_TRANSCRIPT.md
 DESIGN_CASE_STUDY.md

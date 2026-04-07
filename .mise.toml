@@ -1,0 +1,29 @@
+[tools]
+rust = "1.85.0"
+node = "22.14.0"
+
+[env]
+RUST_BACKTRACE = "1"
+
+[tasks.dev]
+description = "Start Tauri dev server"
+run = "cargo tauri dev"
+dir = "{{config_root}}"
+
+[tasks.build]
+description = "Build Tauri app for macOS"
+run = "cargo tauri build"
+dir = "{{config_root}}"
+
+[tasks.setup]
+description = "Install dependencies and Tauri CLI"
+run = [
+  "cargo install tauri-cli --version '^2' --locked",
+  "curl -fsSL https://raw.githubusercontent.com/d3/d3/main/dist/d3.min.js -o ui/js/vendor/d3.min.js || true",
+]
+dir = "{{config_root}}"
+
+[tasks.check]
+description = "Run cargo check"
+run = "cargo check"
+dir = "src-tauri"
