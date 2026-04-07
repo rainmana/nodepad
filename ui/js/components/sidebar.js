@@ -80,8 +80,9 @@ function attachSidebarEvents(el) {
 
   // New project
   el.querySelector("#btn-new-project").addEventListener("click", () => {
-    const name = prompt("Project name:", "Untitled")
-    if (name?.trim()) createProject(name.trim())
+    showInlineInput(el.querySelector("#projects-section"), "New project name…", "Untitled", name => {
+      if (name?.trim()) createProject(name.trim())
+    })
   })
 
   // Import
@@ -205,10 +206,11 @@ export function renderProjectList(el) {
       e.stopPropagation()
       const pid = item.dataset.pid
       const current = state.projects.find(p => p.id === pid)?.name || ""
-      const newName = prompt("Rename project:", current)
-      if (newName?.trim() && newName.trim() !== current) {
-        renameProject(pid, newName.trim())
-      }
+      showInlineInput(item.closest("#projects-section") || el.querySelector("#projects-section"), "Rename project…", current, newName => {
+        if (newName?.trim() && newName.trim() !== current) {
+          renameProject(pid, newName.trim())
+        }
+      })
     })
   })
 }
@@ -231,6 +233,38 @@ export function syncSidebarSettings(el) {
 
 function escHtml(str = "") {
   return String(str).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
+}
+
+function showInlineInput(anchor, placeholder, defaultValue, onConfirm) {
+  // Remove any existing inline input
+  anchor.querySelector(".inline-input-row")?.remove()
+
+  const row = document.createElement("div")
+  row.className = "inline-input-row"
+  row.innerHTML = `
+    <input class="form-input inline-name-input" type="text" placeholder="${escHtml(placeholder)}" value="${escHtml(defaultValue)}">
+    <button class="btn-primary btn-inline-confirm">OK</button>
+    <button class="btn-icon btn-inline-cancel">✕</button>
+  `
+  anchor.appendChild(row)
+
+  const input = row.querySelector(".inline-name-input")
+  input.focus()
+  input.select()
+
+  const confirm = () => {
+    const val = input.value.trim()
+    row.remove()
+    onConfirm(val)
+  }
+  const cancel = () => row.remove()
+
+  row.querySelector(".btn-inline-confirm").addEventListener("click", confirm)
+  row.querySelector(".btn-inline-cancel").addEventListener("click", cancel)
+  input.addEventListener("keydown", e => {
+    if (e.key === "Enter") confirm()
+    if (e.key === "Escape") cancel()
+  })
 }
 
 function showToast(msg) {

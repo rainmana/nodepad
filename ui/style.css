@@ -563,6 +563,9 @@ button { cursor: pointer; font-family: inherit; }
 .project-count { font-size: 11px; color: var(--text-dim); }
 
 .sidebar-actions { display: flex; flex-direction: column; gap: 6px; }
+.inline-input-row { display: flex; gap: 6px; align-items: center; margin-top: 6px; }
+.inline-name-input { flex: 1; min-width: 0; }
+.btn-inline-confirm { padding: 4px 10px; font-size: 12px; white-space: nowrap; }
 
 /* Settings form */
 .settings-form { display: flex; flex-direction: column; gap: 10px; }
